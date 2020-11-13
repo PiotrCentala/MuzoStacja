@@ -2,8 +2,9 @@ import React from 'react'
 import { View, Text, Button } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import RootStackParamList from './RootStackParamList';
-import { getUsers } from '../Api/mock/GetData'
+import { getRecords } from '../Api/GetRecords'
 import { setToken } from '../Api/token'
+import { weekDatabaseResponse } from '../Api/weekDatabaseResponse'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -11,17 +12,21 @@ type HomeNavigationProp = StackNavigationProp<RootStackParamList, "Home">
 type Props = {
     navigation: HomeNavigationProp,
 }
+type State = {
+    records?: weekDatabaseResponse,
+    hasLoadedrecords?: boolean,
+    RecordsErrorMessage?: '',
+}
 
+class HomeScreen extends React.Component<Props, State>{
+    state: State = {};
 
-class HomeScreen extends React.Component<Props, {}>{
-    state = { users: [], hasLoadedUsers: false, userLoadingErrorMessage: '' }
-
-    loadUsers() {
-        getUsers()
+    loadRecordss() {
+        getRecords()
             .then((res: any) =>
                 this.setState({
-                    hasLoadedUsers: true,
-                    users: res.users,
+                    hasLoadedrecords: true,
+                    records: res,
                 }),
             )
             .catch(this.handleUserLoadingError);
@@ -33,29 +38,28 @@ class HomeScreen extends React.Component<Props, {}>{
         else {
             this.setState(
                 {
-                    hasLoadedUsers: false,
-                    userLoadingErrorMessage: res.message,
+                    hasLoadedrecords: false,
                 }
             );
 
 
         }
     }
-    _unsubscribe: any;
-    componentDidMount() {
-        this._unsubscribe = this.props.navigation.addListener(
-            'focus', () => {
-                if (!this.state.hasLoadedUsers) {
-                    this.loadUsers();
-                }
+    _unsubscribe = this.props.navigation.addListener(
+        'focus', () => {
+            if (!this.state.hasLoadedrecords) {
+                this.loadRecordss();
             }
-        )
+        }
+    )
+    componentDidMount() {
+        () => this._unsubscribe;
     }
     componentWillUnmount() {
         this._unsubscribe();
     }
     logOut = async () => {
-        this.setState({ hasLoadedUsers: false, users: [] })
+        this.setState({ hasLoadedrecords: false, records: {} })
         await setToken('');
         this.props.navigation.navigate('Login');
     }
@@ -65,9 +69,7 @@ class HomeScreen extends React.Component<Props, {}>{
             <View style={{ flex: 1, alignItems: 'center', justifyContent: "center", }}>
                 <Text>Home Screen</Text>
                 <Button title='Log out' onPress={this.logOut} />
-                {this.state.users.map((user: any) => (
-                    <Text key={user.email}>{user.email}</Text>
-                ))}
+                <Text>{this.state.records?.message}</Text>
             </View>
         )
     }

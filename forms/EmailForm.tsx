@@ -18,10 +18,16 @@ const EmailForm = (a: EmailProps) => {
     const submit = () => {
         a.onSubmit(email, password)
             .then(async (res: any) => {
-                await setToken(res.auth_token);
+                await setToken(res.token);
+                console.log(res.name);
                 a.onAuthentication();
             })
-            .catch((res: any) => setErrorMessage(res.error));
+            .catch((res: any) => {
+                if (res && res.error) {
+                    setErrorMessage(res.error)
+                }
+                setErrorMessage('Something wrong!')
+            });
     };
 
     return (

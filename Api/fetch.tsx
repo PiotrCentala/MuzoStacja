@@ -2,14 +2,15 @@ import { API_URL } from '../secrets'
 import { getToken } from './token'
 
 const getHeaders = async () => {
-    const token = getToken();
+    const token = await getToken();
     const headers = {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        Authorization: ``,
+        authorization: ``,
     };
     if (token) {
-        headers.Authorization = `Bearer ${token}`;
+        console.log(token)
+        headers.authorization = `${token}`;
     }
     return headers;
 }
@@ -23,7 +24,6 @@ export const post = async (destination: string, body: any) => {
         headers,
         body: JSON.stringify(body),
     });
-    console.log(result);
     if (result.ok) {
         return await result.json();
     }
@@ -38,7 +38,6 @@ export const get = async (destination: string) => {
         method: 'GET',
         headers,
     })
-    console.log(result);
     if (result.ok) {
         return await result.json();
     }
