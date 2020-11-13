@@ -41,15 +41,15 @@ class HomeScreen extends React.Component<Props, {}>{
 
         }
     }
-    _unsubscribe: any;
-    componentDidMount() {
-        this._unsubscribe = this.props.navigation.addListener(
-            'focus', () => {
-                if (!this.state.hasLoadedUsers) {
-                    this.loadUsers();
-                }
+    _unsubscribe = this.props.navigation.addListener(
+        'focus', () => {
+            if (!this.state.hasLoadedUsers) {
+                this.loadUsers();
             }
-        )
+        }
+    );
+    componentDidMount() {
+        () => this._unsubscribe;
     }
     componentWillUnmount() {
         this._unsubscribe();
