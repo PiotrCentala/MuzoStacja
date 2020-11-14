@@ -7,9 +7,9 @@ export type weekDatabaseResponse =
             startTime: Date,
             bookingPayed: number,
             isPayed: boolean,
-            start_date: Date,
+            start_date: string,
             start_hour: number,
-        }
+        }[],
     }
 
 type Record =

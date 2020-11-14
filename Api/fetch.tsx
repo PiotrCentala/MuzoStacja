@@ -9,7 +9,7 @@ const getHeaders = async () => {
         authorization: ``,
     };
     if (token) {
-        console.log(token)
+        //console.log(token)
         headers.authorization = `${token}`;
     }
     return headers;

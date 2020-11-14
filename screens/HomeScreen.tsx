@@ -5,28 +5,27 @@ import RootStackParamList from './RootStackParamList';
 import { getRecords } from '../Api/GetRecords'
 import { setToken } from '../Api/token'
 import { weekDatabaseResponse } from '../Api/weekDatabaseResponse'
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { filterOutEmpty, giveRecordsForDay } from '../Logic/ParseWeekDatabaseResponse'
 
 type HomeNavigationProp = StackNavigationProp<RootStackParamList, "Home">
 type Props = {
     navigation: HomeNavigationProp,
 }
 type State = {
-    records?: weekDatabaseResponse,
+    records: weekDatabaseResponse,
     hasLoadedrecords?: boolean,
     RecordsErrorMessage?: '',
 }
 
 class HomeScreen extends React.Component<Props, State>{
-    state: State = {};
+    state: State = { records: {} };
 
     loadRecordss() {
         getRecords()
-            .then((res: any) =>
+            .then((res: weekDatabaseResponse) =>
                 this.setState({
                     hasLoadedrecords: true,
-                    records: res,
+                    records: filterOutEmpty(res),
                 }),
             )
             .catch(this.handleUserLoadingError);
@@ -50,6 +49,7 @@ class HomeScreen extends React.Component<Props, State>{
             if (!this.state.hasLoadedrecords) {
                 this.loadRecordss();
             }
+
         }
     )
     componentDidMount() {
@@ -65,11 +65,15 @@ class HomeScreen extends React.Component<Props, State>{
     }
 
     render() {
+        const records: weekDatabaseResponse = giveRecordsForDay(this.state.records);
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: "center", }}>
                 <Text>Home Screen</Text>
                 <Button title='Log out' onPress={this.logOut} />
-                <Text>{this.state.records?.message}</Text>
+                <Text>{records.message}</Text>
+                {records.data?.map((record) => (
+                    <Text key={record.startTime.toString()}>{record.start_hour}:00 {record.noOf}</Text>
+                ))}
             </View>
         )
     }
