@@ -13,14 +13,13 @@ type Props = {
 const LoginScreen = ({ navigation }: Props) => {
     const [errorMessage, seterrorMessage] = useState('');
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: "center", }}>
-            <EmailForm
-                buttonText="Log in"
-                onSubmit={Login}
-                onAuthentication={() => navigation.navigate('Home')}
-            />
-            {errorMessage ? <Text style={{ color: 'red' }}>{errorMessage}</Text> : null}
-        </View>
+
+        <EmailForm
+            buttonText="Zaloguj"
+            onSubmit={Login}
+            onAuthentication={() => navigation.navigate('Home')}
+        />
+
     )
 }
 export default LoginScreen;

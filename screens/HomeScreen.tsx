@@ -6,22 +6,25 @@ import { getRecords } from '../Api/GetRecords'
 import { setToken } from '../Api/token'
 import { weekDatabaseResponse } from '../Api/weekDatabaseResponse'
 import { filterOutEmpty, giveRecordsForDay } from '../Logic/ParseWeekDatabaseResponse'
+import { DayRecords } from '../Visual/DayRecords'
+import { CreateWeekData, weekData } from '../Logic/weekData'
+
 
 type HomeNavigationProp = StackNavigationProp<RootStackParamList, "Home">
 type Props = {
     navigation: HomeNavigationProp,
 }
 type State = {
-    records: weekDatabaseResponse,
+    records?: weekDatabaseResponse,
     hasLoadedrecords?: boolean,
     RecordsErrorMessage?: '',
 }
 
 class HomeScreen extends React.Component<Props, State>{
-    state: State = { records: {} };
+    state: State = {};
 
     loadRecordss() {
-        getRecords()
+        getRecords('GetSlotsInfoFromDate/-1/-1')
             .then((res: weekDatabaseResponse) =>
                 this.setState({
                     hasLoadedrecords: true,
@@ -67,21 +70,16 @@ class HomeScreen extends React.Component<Props, State>{
         this.props.navigation.setOptions({});
     }
     logOut = async () => {
-        this.setState({ hasLoadedrecords: false, records: {} })
+        this.setState({ hasLoadedrecords: false, records: undefined })
         await setToken('');
         this.props.navigation.navigate('Login');
     }
 
     render() {
 
-        const records: weekDatabaseResponse = giveRecordsForDay(this.state.records, 2);
+        const data = CreateWeekData(this.state.records as weekDatabaseResponse);
         return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: "center", }}>
-                <Text>{records.message}</Text>
-                {records.data?.map((record) => (
-                    <Text key={record.startTime.toString()}>{record.start_hour}:00 {record.noOf}</Text>
-                ))}
-            </View>
+            <DayRecords records={data} date={-5}></DayRecords>
         )
     }
 }
