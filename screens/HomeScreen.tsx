@@ -54,9 +54,17 @@ class HomeScreen extends React.Component<Props, State>{
     )
     componentDidMount() {
         () => this._unsubscribe;
+
+        this.props.navigation.setOptions({
+            headerRight: () => (
+                <Button onPress={this.logOut} title="Wyloguj" />
+            ),
+        });
+
     }
     componentWillUnmount() {
         this._unsubscribe();
+        this.props.navigation.setOptions({});
     }
     logOut = async () => {
         this.setState({ hasLoadedrecords: false, records: {} })
@@ -65,11 +73,10 @@ class HomeScreen extends React.Component<Props, State>{
     }
 
     render() {
-        const records: weekDatabaseResponse = giveRecordsForDay(this.state.records);
+
+        const records: weekDatabaseResponse = giveRecordsForDay(this.state.records, 2);
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: "center", }}>
-                <Text>Home Screen</Text>
-                <Button title='Log out' onPress={this.logOut} />
                 <Text>{records.message}</Text>
                 {records.data?.map((record) => (
                     <Text key={record.startTime.toString()}>{record.start_hour}:00 {record.noOf}</Text>
