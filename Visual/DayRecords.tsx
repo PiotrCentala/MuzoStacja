@@ -1,32 +1,58 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, Button, ScrollView, StyleSheet } from 'react-native'
 import { weekData, giveRecordsForDay } from '../Logic/weekData'
-
-
+import { Card } from './Card'
+import { StackNavigationProp } from '@react-navigation/stack'
+import RootStackParamList from '../screens/RootStackParamList';
+import Moment from 'moment'
 type DayRecordsParams = {
-    records: weekData[],
-    date: number,
+    records?: weekData[],
+    date: string,
+    navigation: HomeNavigationProp,
+    currentDisplayedWeek: number,
 }
-
+type HomeNavigationProp = StackNavigationProp<RootStackParamList, "Home">
 export const DayRecords = (params: DayRecordsParams) => {
-    const records = giveRecordsForDay(params.records, params.date)
-    const [Color, setColor] = useState('#D6FFD2');
+    const records = giveRecordsForDay(params.records as weekData[], params.date)
+    const GoBack = () => {
+        if (params.navigation.canGoBack()) {
+            params.navigation.goBack();
+        }
+    }
+    const GoForwardBackward = (dif: number) => {
+        const a = Moment(params.date, "YYYY.MM.DD").add(dif, 'd').week() - Moment(params.date, "YYYY.MM.DD").week();
+        if (a) {
+            params.navigation.replace("Home", {
+                date: Moment(params.date, "YYYY.MM.DD").add(dif, 'd').format("YYYY.MM.DD"),
+                loadRecords: true,
+                records: undefined,
+                displayedWeek: params.currentDisplayedWeek + a,
+            })
+        }
+        else {
+            params.navigation.replace("Home", {
+                date: Moment(params.date, "YYYY.MM.DD").add(dif, 'd').format("YYYY.MM.DD"),
+                loadRecords: false,
+                records: params.records,
+                displayedWeek: params.currentDisplayedWeek,
+            })
+        }
+    }
     return (
-        <ScrollView style={styles.container} >
-            <View style={{ marginBottom: 50, justifyContent: 'center', alignItems: 'center' }}>
-
-
-                {records?.map((record) =>
-                    (
-                        <View key={record.id}>
-
-                            <View style={[styles.card, { backgroundColor: SetColor(record.noofPass as number) }]}>
-                                <Text >Godzina: {record.hour}:00, Karnet: {record.noofPass}, Opłacone: {record.noofPayed}</Text>
-                            </View>
-                        </View>
-                    ))}
+        <View style={{ flex: 1 }}>
+            <ScrollView style={styles.container} >
+                <View style={{ marginBottom: 50, justifyContent: 'center', alignItems: 'center' }}>
+                    {records?.map((record) =>
+                        (
+                            <Card record={record} key={record.id} />
+                        ))}
+                </View>
+            </ScrollView>
+            <View style={{ flexDirection: 'row-reverse' }}>
+                <Button title="następny" onPress={() => GoForwardBackward(1)} />
+                <Button title="poprzedni" onPress={() => GoForwardBackward(-1)} />
             </View>
-        </ScrollView>
+        </View>
     );
 }
 function SetColor(input: number) {
@@ -42,24 +68,15 @@ const styles = StyleSheet.create({
         padding: 24,
         flex: 1,
     },
-    input: {
-        height: 80,
-        width: 300,
-        margin: 10,
+    date: {
+        alignContent: "center",
+        //alignItems: "center",
+        //justifyContent: "center"
     },
-    card: {
-        marginBottom: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 80,
-        width: 300,
-        backgroundColor: 'white',
-        borderWidth: 1,
-        borderColor: 'lightgray',
-        borderRadius: 3,
-        padding: 10,
-        shadowColor: 'black',
-        shadowRadius: 33.0,
-        shadowOpacity: 0.2,
+    textdate: {
+        fontFamily: "Helvetica",
+        fontSize: 25,
+        fontStyle: "italic",
+        justifyContent: "center",
     }
 });

@@ -5,8 +5,8 @@ export type weekData = {
     date: string,
     hour: string,
     startTime: Date,
-    noofPass: number,
-    noofPayed: number,
+    noofPass?: number,
+    noofPayed?: number,
 }
 
 export const CreateWeekData = (input: weekDatabaseResponse) => {
@@ -18,37 +18,31 @@ export const CreateWeekData = (input: weekDatabaseResponse) => {
 
             if (element.bookingPayed > 0) {
                 out.push({
-                    noofPass: 0, noofPayed: Number(element.noOf), startTime: element.startTime, hour: element.start_hour.toString(), date: element.start_date,
+                    noofPass: undefined, noofPayed: Number(element.noOf), startTime: element.startTime, hour: element.start_hour.toString(), date: element.start_date,
                     id: Math.random().toString()
                 })
             }
             else {
                 out.push({
-                    noofPass: Number(element.noOf), noofPayed: 0, startTime: element.startTime, hour: element.start_hour.toString(), date: element.start_date,
+                    noofPass: Number(element.noOf), noofPayed: undefined, startTime: element.startTime, hour: element.start_hour.toString(), date: element.start_date,
                     id: Math.random().toString()
                 })
             }
         }
         else {
             if (element.bookingPayed > 0) {
-                const a = (out[i].noofPayed + Number(element.noOf))
-                console.log(a);
-                out[i].noofPayed = a;
+                out[i].noofPayed = Number(element.noOf);
 
             }
             else {
-                //out[i].noofPass = (out[i].noofPayed + element.noOf);
+                out[i].noofPass = Number(element.noOf);
             }
         }
     });
     return out;
 }
 
-export const giveRecordsForDay = (inputrecord: weekData[], date_Move: number = 0) => {
-    var date = new Date().getDate() + date_Move;
-    var month = new Date().getMonth() + 1;
-    var year = new Date().getFullYear();
-    let today = `${year}.${month}.${date}`
+export const giveRecordsForDay = (inputrecord: weekData[], today: string) => {
     inputrecord = inputrecord.filter((a) => { return (a.date === today) })
     return inputrecord;
 }
