@@ -2,22 +2,15 @@ export type weekDatabaseResponse =
     {
         status?: string;
         message?: string;
-        data?: {
-            noOf: number,
-            startTime: Date,
-            bookingPayed: number,
-            isPayed: boolean,
-            start_date: string,
-            start_hour: number,
-        }[],
+        data: Record[],
     }
 
-type Record =
+export type Record =
     {
         noOf: number,
         startTime: Date,
         bookingPayed: number,
-        isPayed: boolean,
-        start_date: Date,
+        isPayed: number,
+        start_date: string,
         start_hour: number,
     }
