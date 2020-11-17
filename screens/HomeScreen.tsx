@@ -38,7 +38,7 @@ class HomeScreen extends React.Component<Props, State>{
     }
     handleUserLoadingError = (res: any) => {
         if (res.error === 401) {
-            this.props.navigation.navigate("Login");
+            this.props.navigation.replace("Login");
         }
         else {
             this.setState(
@@ -72,13 +72,8 @@ class HomeScreen extends React.Component<Props, State>{
                     />
                 } />
             ),
-            headerStyle: {
-                backgroundColor: '#e65100'
-            },
-            headerTitleStyle: {
-                color: '#ffffff'
-            },
-            headerTitle: this.props.route.params.date
+            headerTitle: this.props.route.params.date,
+
         });
 
     }
@@ -89,8 +84,9 @@ class HomeScreen extends React.Component<Props, State>{
     logOut = async () => {
         this.setState({ hasLoadedrecords: false, records: undefined })
         await setToken('');
-        this.props.navigation.navigate('Login');
+        this.props.navigation.replace('Login');
     }
+
 
     render() {
         var data = this.props.route.params.records;

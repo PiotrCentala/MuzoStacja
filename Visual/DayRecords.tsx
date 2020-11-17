@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Button, ScrollView, StyleSheet } from 'react-native'
+import { View, Text, Button, ScrollView, StyleSheet, Image } from 'react-native'
 import { weekData, giveRecordsForDay } from '../Logic/weekData'
 import { Card } from './Card'
 import { StackNavigationProp } from '@react-navigation/stack'
 import RootStackParamList from '../screens/RootStackParamList';
 import Moment from 'moment'
+import { NavButton } from '../Visual/NavButton'
+
+
 type DayRecordsParams = {
     records?: weekData[],
     date: string,
@@ -14,11 +17,7 @@ type DayRecordsParams = {
 type HomeNavigationProp = StackNavigationProp<RootStackParamList, "Home">
 export const DayRecords = (params: DayRecordsParams) => {
     const records = giveRecordsForDay(params.records as weekData[], params.date)
-    const GoBack = () => {
-        if (params.navigation.canGoBack()) {
-            params.navigation.goBack();
-        }
-    }
+
     const GoForwardBackward = (dif: number) => {
         const a = Moment(params.date, "YYYY.MM.DD").add(dif, 'd').week() - Moment(params.date, "YYYY.MM.DD").week();
         if (a) {
@@ -38,8 +37,10 @@ export const DayRecords = (params: DayRecordsParams) => {
             })
         }
     }
+
     return (
         <View style={{ flex: 1 }}>
+
             <ScrollView style={styles.container} >
                 <View style={{ marginBottom: 50, justifyContent: 'center', alignItems: 'center' }}>
                     {records?.map((record) =>
@@ -48,20 +49,17 @@ export const DayRecords = (params: DayRecordsParams) => {
                         ))}
                 </View>
             </ScrollView>
-            <View style={{ flexDirection: 'row-reverse' }}>
-                <Button title="następny" onPress={() => GoForwardBackward(1)} />
-                <Button title="poprzedni" onPress={() => GoForwardBackward(-1)} />
+
+
+            <View style={styles.buttons}>
+                <NavButton icon="arrow-right-bold" logic={GoForwardBackward} direction={1} />
+                <Image style={{ width: '50%', resizeMode: 'contain' }} source={require('../icons/muzoStacja.png')} />
+                <NavButton icon="arrow-left-bold" logic={GoForwardBackward} direction={-1} />
             </View>
         </View>
     );
-}
-function SetColor(input: number) {
-    if (input > 0)
-        return '#D6FFD2'
-    else
-        return '#D2E3FF'
-}
 
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -78,5 +76,11 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontStyle: "italic",
         justifyContent: "center",
+    },
+    buttons: {
+        flexDirection: 'row-reverse',
+        justifyContent: "space-between",
+        alignItems: 'center',
+        padding: 15,
     }
 });

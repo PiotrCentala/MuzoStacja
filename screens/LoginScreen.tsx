@@ -14,13 +14,12 @@ type Props = {
 
 const LoginScreen = ({ navigation }: Props) => {
     const [errorMessage, seterrorMessage] = useState('');
-
     return (
 
         <EmailForm
             buttonText="Zaloguj"
             onSubmit={Login}
-            onAuthentication={() => navigation.navigate('Home', { date: Moment().format("YYYY.MM.DD"), loadRecords: true, displayedWeek: 0 })}
+            onAuthentication={() => navigation.replace('Home', { date: Moment().format("YYYY.MM.DD"), loadRecords: true, displayedWeek: 0 })}
         />
     )
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, TouchableWithoutFeedback, StyleSheet, TextInput, Button, Text, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
+import { View, TouchableWithoutFeedback, StyleSheet, TextInput, Text, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
+import { Button } from 'react-native-elements'
 import { setToken } from '../Api/token';
 
 type EmailProps =
@@ -51,7 +52,7 @@ const EmailForm = (a: EmailProps) => {
                             value={password}
                             secureTextEntry
                         />
-                        <Button title={a.buttonText} onPress={submit} />
+                        <Button title={a.buttonText} onPress={submit} buttonStyle={{ backgroundColor: '#e65100', width: 110, marginTop: 10, alignSelf: 'center' }} />
                         {errorMessage ? <Text>{errorMessage}</Text> : null}
                     </View>
                 </View>
@@ -87,7 +88,8 @@ const styles = StyleSheet.create({
         shadowColor: 'black',
         shadowRadius: 33.0,
         shadowOpacity: 0.2,
-    }
+    },
+
 });
 
 export default EmailForm;

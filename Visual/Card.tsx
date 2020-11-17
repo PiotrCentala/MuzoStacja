@@ -8,21 +8,22 @@ type CardParams =
         record: weekData,
     }
 export const Card = (props: CardParams) => {
+
     return (
 
 
         <View style={styles.shadow}>
-
-
             <View style={styles.outside}>
                 <View style={styles.hour}>
                     <Text style={[styles.text, { color: '#F5F5F6', fontFamily: 'Helvetica-Bold' }]}>{props.record.hour}:00</Text>
                 </View>
-                <View style={[styles.reservation, { flexGrow: props.record.noofPayed, backgroundColor: "#ffffff" }]}>
+                <View style={[styles.reservation, { flexGrow: props.record.noofPayed, backgroundColor: "#37474f" }]}>
                     <Text style={styles.text}>{props.record.noofPayed}</Text>
+                    {props.record.noofPayed ? <Text style={styles.signature}>J</Text> : null}
                 </View>
-                <View style={[styles.reservation, { flexGrow: props.record.noofPass, backgroundColor: "#cfd8dc" }]}>
+                <View style={[styles.reservation, { flexGrow: props.record.noofPass, backgroundColor: "#62727b" }]}>
                     <Text style={styles.text}>{props.record.noofPass}</Text>
+                    {props.record.noofPass ? <Text style={styles.signature}>K</Text> : null}
                 </View>
             </View>
         </View>
@@ -33,14 +34,16 @@ const styles = StyleSheet.create(
     {
         hour: {
             width: 60,
-            backgroundColor: "#9ea7aa",
+            backgroundColor: "#102027",
             justifyContent: "center",
             alignItems: "center",
+
 
         },
         reservation: {
             alignItems: "center",
             justifyContent: 'center',
+            flexDirection: 'row',
         },
         outside: {
             flexDirection: "row",
@@ -54,14 +57,25 @@ const styles = StyleSheet.create(
         },
         shadow: {
             shadowColor: 'black',
-            shadowRadius: 5.0,
-            shadowOpacity: 0.4,
+            // shadowRadius: 2.0,
+            // shadowOpacity: 0.2,
             width: '100%',
             marginBottom: 15,
         },
         text: {
-            fontFamily: "Helvetica",
+            //fontFamily: "Helvetica",
             fontSize: 20,
+            color: '#F5F5F6',
+            fontFamily: 'Helvetica-Bold',
+        },
+        signature: {
+            position: 'absolute',
+            right: 5,
+            bottom: 5,
+            fontFamily: "Helvetica",
+            fontStyle: 'italic',
+            color: '#F5F5F6',
+            fontSize: 8,
         }
     }
 )
