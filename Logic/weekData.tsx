@@ -10,8 +10,9 @@ export type weekData = {
 }
 
 export const CreateWeekData = (input: weekDatabaseResponse) => {
-    const out: weekData[] = [];
 
+
+    const out: weekData[] = [];
     input?.data.forEach(element => {
         const i = out.findIndex((a) => a.startTime == element.startTime);
         if (i == -1) {
@@ -43,6 +44,6 @@ export const CreateWeekData = (input: weekDatabaseResponse) => {
 }
 
 export const giveRecordsForDay = (inputrecord: weekData[], today: string) => {
-    inputrecord = inputrecord.filter((a) => { return (a.date === today) })
+    inputrecord = inputrecord?.filter((a) => { return (a.date === today) })
     return inputrecord;
 }

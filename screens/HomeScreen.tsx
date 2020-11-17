@@ -18,7 +18,7 @@ type Props = {
     route: HomeScreenRouteProp,
 }
 type State = {
-    records?: weekDatabaseResponse,
+    records?: weekData[],
     hasLoadedrecords?: boolean,
     RecordsErrorMessage?: '',
 }
@@ -28,10 +28,10 @@ class HomeScreen extends React.Component<Props, State>{
 
     loadRecordss() {
         getRecords(`GetSlotsInfoFromDate/${this.props.route.params.displayedWeek}/-1`)
-            .then((res: weekDatabaseResponse) =>
+            .then((res: weekData[]) =>
                 this.setState({
                     hasLoadedrecords: true,
-                    records: filterOutEmpty(res),
+                    records: res,
                 }),
             )
             .catch(this.handleUserLoadingError);
@@ -91,7 +91,7 @@ class HomeScreen extends React.Component<Props, State>{
     render() {
         var data = this.props.route.params.records;
         if (this.props.route.params.records == undefined)
-            data = CreateWeekData(this.state.records as weekDatabaseResponse);
+            data = this.state.records;
         return (
             <DayRecords records={data} date={this.props.route.params.date} navigation={this.props.navigation} currentDisplayedWeek={this.props.route.params.displayedWeek}></DayRecords>
         )
