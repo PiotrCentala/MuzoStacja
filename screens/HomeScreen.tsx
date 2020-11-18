@@ -49,8 +49,6 @@ class HomeScreen extends React.Component<Props, State>{
                     hasLoadedrecords: false,
                 }
             );
-
-
         }
     }
     _unsubscribe = this.props.navigation.addListener(

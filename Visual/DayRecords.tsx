@@ -19,6 +19,10 @@ type HomeNavigationProp = StackNavigationProp<MainStackParamList, "Home">
 export const DayRecords = (params: DayRecordsParams) => {
     const records = giveRecordsForDay(params.records as weekData[], params.date)
 
+    const OpenDetailsModal = (hourin: string, datein: string) => {
+        params.navigation.navigate('DetailsModal', { hour: hourin, date: datein })
+    }
+
     const GoForwardBackward = (dif: number) => {
         const a = Moment(params.date, "YYYY.MM.DD").add(dif, 'd').week() - Moment(params.date, "YYYY.MM.DD").week();
         if (a) {
@@ -46,13 +50,9 @@ export const DayRecords = (params: DayRecordsParams) => {
                     <View style={{ marginBottom: 50, justifyContent: 'center', alignItems: 'center' }}>
                         {records?.map((record) =>
                             (
-                                <Card record={record} key={record.id} />
+                                <Card record={record} key={record.id} openDetails={OpenDetailsModal} />
                             ))}
                     </View>
-                    <Button
-                        onPress={() => params.navigation.navigate('DetailsModal')}
-                        title="Open Modal"
-                    />
                 </ScrollView>
 
                 : records ? <View style={[styles.container, { alignItems: "center", justifyContent: 'center' }]}>

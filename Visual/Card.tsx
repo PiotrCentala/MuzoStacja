@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Button, ScrollView, StyleSheet, Platform } from 'react-native'
+import { View, Text, StyleSheet, Platform, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
 import { Record } from '../Api/weekDatabaseResponse'
 import { weekData } from '../Logic/weekData'
 
 type CardParams =
     {
         record: weekData,
+        openDetails: (hour: string, date: string) => void,
     }
 export const Card = (props: CardParams) => {
 
     return (
-
-
-        <View style={styles.shadow}>
+        <TouchableOpacity style={styles.shadow} onPress={() => props.openDetails(props.record.hour, props.record.date)}>
             <View style={styles.outside}>
                 <View style={styles.hour}>
                     <Text style={[styles.text, { color: '#F5F5F6', fontFamily: Platform.OS === 'ios' ? 'Helvetica-Bold' : 'Roboto' }]}>{props.record.hour}:00</Text>
@@ -34,7 +33,7 @@ export const Card = (props: CardParams) => {
                     </View>
                     : null}
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 const Radius: number = 10;
@@ -59,7 +58,7 @@ const styles = StyleSheet.create(
             borderWidth: 1,
             borderColor: 'grey',
             borderRadius: 5,
-
+            marginBottom: 15,
             height: 40,
             overflow: "hidden",
         },
@@ -68,7 +67,7 @@ const styles = StyleSheet.create(
             // shadowRadius: 2.0,
             // shadowOpacity: 0.2,
             width: '100%',
-            marginBottom: 15,
+
         },
         text: {
             fontSize: 20,
