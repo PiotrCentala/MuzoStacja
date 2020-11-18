@@ -6,6 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import RootStackParamList from '../screens/RootStackParamList';
 import Moment from 'moment'
 import { NavButton } from '../Visual/NavButton'
+import MainStackParamList from '../screens/MainStackParamList'
 
 
 type DayRecordsParams = {
@@ -14,7 +15,7 @@ type DayRecordsParams = {
     navigation: HomeNavigationProp,
     currentDisplayedWeek: number,
 }
-type HomeNavigationProp = StackNavigationProp<RootStackParamList, "Home">
+type HomeNavigationProp = StackNavigationProp<MainStackParamList, "Home">
 export const DayRecords = (params: DayRecordsParams) => {
     const records = giveRecordsForDay(params.records as weekData[], params.date)
 
@@ -48,6 +49,10 @@ export const DayRecords = (params: DayRecordsParams) => {
                                 <Card record={record} key={record.id} />
                             ))}
                     </View>
+                    <Button
+                        onPress={() => params.navigation.navigate('DetailsModal')}
+                        title="Open Modal"
+                    />
                 </ScrollView>
 
                 : records ? <View style={[styles.container, { alignItems: "center", justifyContent: 'center' }]}>

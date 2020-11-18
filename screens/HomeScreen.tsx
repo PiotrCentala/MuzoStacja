@@ -12,9 +12,10 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { RouteProp } from '@react-navigation/native'
 import { HomeTitle } from '../Visual/HomeTitle'
 import Moment from 'moment'
+import MainStackParamList from './MainStackParamList';
 
-type HomeNavigationProp = StackNavigationProp<RootStackParamList, "Home">
-type HomeScreenRouteProp = RouteProp<RootStackParamList, "Home">
+type HomeNavigationProp = StackNavigationProp<MainStackParamList, "Home">
+type HomeScreenRouteProp = RouteProp<MainStackParamList, "Home">
 type Props = {
     navigation: HomeNavigationProp,
     route: HomeScreenRouteProp,
