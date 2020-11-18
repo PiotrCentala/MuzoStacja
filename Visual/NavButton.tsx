@@ -15,7 +15,7 @@ export const NavButton = (props: NavButtonProp) => {
             <Icon
                 name={props.icon}
                 color="white"
-                size={50}
+                size={40}
             />
         </TouchableOpacity>
     )
@@ -23,12 +23,12 @@ export const NavButton = (props: NavButtonProp) => {
 
 const styles = StyleSheet.create({
     roundButton: {
-        width: 70,
-        height: 70,
+        width: 60,
+        height: 60,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 10,
-        borderRadius: 70,
+        borderRadius: 60,
         backgroundColor: '#e65100',
     },
 })

@@ -10,6 +10,8 @@ import { DayRecords } from '../Visual/DayRecords'
 import { CreateWeekData, weekData } from '../Logic/weekData'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { RouteProp } from '@react-navigation/native'
+import { HomeTitle } from '../Visual/HomeTitle'
+import Moment from 'moment'
 
 type HomeNavigationProp = StackNavigationProp<RootStackParamList, "Home">
 type HomeScreenRouteProp = RouteProp<RootStackParamList, "Home">
@@ -68,11 +70,20 @@ class HomeScreen extends React.Component<Props, State>{
                     <Icon
                         name="login-variant"
                         color="white"
-                        size={20}
+                        size={25}
                     />
                 } />
             ),
-            headerTitle: this.props.route.params.date,
+            headerLeft: () => (
+                <Button onPress={() => this.props.navigation.replace('Home', { date: Moment().format("YYYY.MM.DD"), loadRecords: true, displayedWeek: 0 })} style={{ marginLeft: 5 }} buttonStyle={{ backgroundColor: 'rba(0,0,0,0)' }} icon={
+                    <Icon
+                        name="reload"
+                        color="white"
+                        size={25}
+                    />
+                } />
+            ),
+            headerTitle: props => <HomeTitle {...props} day={this.props.route.params.date} />,
 
         });
 

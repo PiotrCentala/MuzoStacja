@@ -13,7 +13,8 @@ const ReactNavigation = () => {
   Moment.updateLocale('en', {
     week: {
       dow: today,
-    }
+    },
+    weekdays: 'Niedzielra_Poniedziałek_Wtorek_Środa_Czwartek_Piątunio_Sobota'.split('_'),
   })
   return (
     <NavigationContainer>
@@ -21,9 +22,6 @@ const ReactNavigation = () => {
         <RootStack.Screen name="Home" component={HomeScreen} initialParams={{ date: Moment().format("YYYY.MM.DD"), loadRecords: true, displayedWeek: 0 }} options={{
           headerStyle: {
             backgroundColor: '#e65100'
-          },
-          headerTitleStyle: {
-            color: '#ffffff'
           },
           animationEnabled: false,
         }} />

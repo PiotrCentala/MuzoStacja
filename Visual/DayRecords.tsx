@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Button, ScrollView, StyleSheet, Image } from 'react-native'
+import { View, Text, Button, ScrollView, StyleSheet, Image, Platform } from 'react-native'
 import { weekData, giveRecordsForDay } from '../Logic/weekData'
 import { Card } from './Card'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
         //justifyContent: "center"
     },
     textdate: {
-        fontFamily: "Helvetica",
+        fontFamily: Platform.OS === 'ios' ? 'Helvetica' : 'Roboto',
         fontSize: 25,
         fontStyle: "italic",
         justifyContent: "center",
