@@ -40,17 +40,19 @@ export const DayRecords = (params: DayRecordsParams) => {
 
     return (
         <View style={{ flex: 1 }}>
+            {records?.length > 0 ?
+                <ScrollView style={styles.container} >
+                    <View style={{ marginBottom: 50, justifyContent: 'center', alignItems: 'center' }}>
+                        {records?.map((record) =>
+                            (
+                                <Card record={record} key={record.id} />
+                            ))}
+                    </View>
+                </ScrollView>
 
-            <ScrollView style={styles.container} >
-                <View style={{ marginBottom: 50, justifyContent: 'center', alignItems: 'center' }}>
-                    {records?.map((record) =>
-                        (
-                            <Card record={record} key={record.id} />
-                        ))}
-                </View>
-            </ScrollView>
-
-
+                : records ? <View style={[styles.container, { alignItems: "center", justifyContent: 'center' }]}>
+                    <Image style={{ width: '70%', resizeMode: 'contain' }} source={require('../icons/lemur.png')} />
+                </View> : <View style={[styles.container]} />}
             <View style={styles.buttons}>
                 <NavButton icon="arrow-right-bold" logic={GoForwardBackward} direction={1} />
                 <Image style={{ width: '50%', resizeMode: 'contain' }} source={require('../icons/muzoStacja.png')} />
