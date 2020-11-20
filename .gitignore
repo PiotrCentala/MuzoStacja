@@ -11,4 +11,3 @@ web-build/
 secrets.tsx
 # macOS
 .DS_Store
-debug.log
