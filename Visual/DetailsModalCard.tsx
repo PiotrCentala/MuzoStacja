@@ -12,42 +12,34 @@ export const DetailsModalCard = (props: DetailsModalParams) => {
     return (
         <View style={styles.outside} >
             <View style={styles.hour}>
-                <Text style={[styles.text, { color: '#F5F5F6', fontFamily: Platform.OS === 'ios' ? 'Helvetica-Bold' : 'Roboto' }]}>
+                <Text style={[styles.text, { color: '#F5F5F6', fontSize: 23, fontFamily: Platform.OS === 'ios' ? 'Helvetica-Bold' : 'Roboto' }]}>
                     {props.record.visittypeName.substring(props.record.visittypeName.indexOf('<b>') + 3, props.record.visittypeName.indexOf('[m2]')).toUpperCase()}
                 </Text>
             </View>
-            {props.record.isPayed != 0 ?
-                <View style={[styles.reservation, { backgroundColor: "#37474f" }]}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', paddingVertical: 10, paddingHorizontal: 30 }}>
-                        <Text style={styles.text}>{props.record.firstName}</Text>
-                        <Text style={styles.text}>{props.record.lastname}</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'flex-start', width: '100%', padding: 10 }}>
-                        <Text style={styles.text}>Tel: {props.record.phone}</Text>
-                        <View style={[styles.circle, { backgroundColor: '#4caf50' }]}>
-                            <Text style={styles.signature}>J</Text>
-                        </View>
-                    </View>
-                </View>
-                :
 
-                <View style={[styles.reservation, { backgroundColor: "#62727b" }]}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                        <Text style={styles.text}>{props.record.firstName}</Text>
-                        <Text style={styles.text}>{props.record.lastname}</Text>
+            <View style={[styles.reservation, { backgroundColor: props.record.isPayed != 0 ? "#37474f" : "#62727b" }]}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', paddingVertical: 5, paddingHorizontal: 20 }}>
+                    <View style={{ width: '75%' }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
+                            <Text style={styles.text}>{props.record.firstName}</Text>
+                            <Text style={styles.text}>{props.record.lastname}</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <Text style={styles.text}>Telefon:</Text>
+                            <Text style={styles.text}>{props.record.phone}</Text>
+                        </View>
                     </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={styles.text}>Tel: {props.record.phone}</Text>
-                        <View style={styles.circle}>
-                            <Text style={styles.signature}>K</Text>
+                    <View style={{ justifyContent: 'center', alignItems: 'flex-end' }}>
+                        <View style={[styles.circle, { backgroundColor: props.record.isPayed != 0 ? '#4caf50' : '#3f51b5', }]}>
+                            <Text style={styles.signature}>{props.record.isPayed != 0 ? 'J' : 'K'}</Text>
                         </View>
                     </View>
                 </View>
-            }
+            </View>
         </View>
     )
 }
-
+const CircleSize = 35;
 const styles = StyleSheet.create(
     {
         hour: {
@@ -87,16 +79,16 @@ const styles = StyleSheet.create(
             fontFamily: Platform.OS === 'ios' ? 'Helvetica' : 'Roboto',
             fontStyle: 'italic',
             color: '#F5F5F6',
-            fontSize: 15,
+            fontSize: 22,
         },
         circle: {
             backgroundColor: '#3f51b5',
-            width: 25,
-            height: 25,
-            borderRadius: 25,
-            position: 'absolute',
-            right: 3,
-            bottom: 3,
+            width: CircleSize,
+            height: CircleSize,
+            borderRadius: CircleSize,
+            // position: 'absolute',
+            // right: 10,
+            // bottom: 10,
             alignContent: 'center',
             justifyContent: 'center',
             alignItems: 'center',
