@@ -40,7 +40,7 @@ export const DayRecords = (params: DayRecordsParams) => {
 
     return (
         <View style={{ flex: 1 }}>
-            {records?.length > 0 ?
+            {records?.filter((a) => { return (a.notEmpty == true) }).length > 0 ?
                 <ScrollView style={styles.container} >
                     <View style={{ marginBottom: 50, justifyContent: 'center', alignItems: 'center' }}>
                         {records?.map((record) =>

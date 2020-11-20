@@ -7,6 +7,7 @@ export type weekData = {
     startTime: Date,
     noofPass?: number,
     noofPayed?: number,
+    notEmpty: boolean,
 }
 
 export const CreateWeekData = (input: weekDatabaseResponse) => {
@@ -20,13 +21,19 @@ export const CreateWeekData = (input: weekDatabaseResponse) => {
             if (element.bookingPayed > 0) {
                 out.push({
                     noofPass: undefined, noofPayed: Number(element.noOf), startTime: element.startTime, hour: element.start_hour.toString(), date: element.start_date,
-                    id: Math.random().toString()
+                    id: Math.random().toString(), notEmpty: true,
+                })
+            }
+            else if (element.isPayed > 0) {
+                out.push({
+                    noofPass: Number(element.noOf), noofPayed: undefined, startTime: element.startTime, hour: element.start_hour.toString(), date: element.start_date,
+                    id: Math.random().toString(), notEmpty: true
                 })
             }
             else {
                 out.push({
-                    noofPass: Number(element.noOf), noofPayed: undefined, startTime: element.startTime, hour: element.start_hour.toString(), date: element.start_date,
-                    id: Math.random().toString()
+                    noofPass: undefined, noofPayed: undefined, startTime: element.startTime, hour: element.start_hour.toString(), date: element.start_date,
+                    id: Math.random().toString(), notEmpty: false
                 })
             }
         }
@@ -35,7 +42,7 @@ export const CreateWeekData = (input: weekDatabaseResponse) => {
                 out[i].noofPayed = Number(element.noOf);
 
             }
-            else {
+            else if (element.isPayed > 0) {
                 out[i].noofPass = Number(element.noOf);
             }
         }

@@ -5,7 +5,6 @@ import RootStackParamList from './RootStackParamList';
 import { getRecords } from '../Api/GetRecords'
 import { setToken } from '../Api/token'
 import { weekDatabaseResponse } from '../Api/weekDatabaseResponse'
-import { filterOutEmpty } from '../Logic/ParseWeekDatabaseResponse'
 import { DayRecords } from '../Visual/DayRecords'
 import { CreateWeekData, weekData } from '../Logic/weekData'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
