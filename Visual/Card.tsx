@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Button, ScrollView, StyleSheet, Platform } from 'react-native'
+import { View, Text, StyleSheet, Platform, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
 import { Record } from '../Api/weekDatabaseResponse'
 import { weekData } from '../Logic/weekData'
 
 type CardParams =
     {
         record: weekData,
+        openDetails: (hour: string, date: string) => void,
     }
 export const Card = (props: CardParams) => {
 
@@ -14,7 +15,7 @@ export const Card = (props: CardParams) => {
 
         <View style={styles.shadow}>
             {props.record.notEmpty == true ?
-                <View style={styles.outside}>
+                <TouchableOpacity style={styles.outside} onPress={() => props.openDetails(props.record.hour, props.record.date)}>
 
                     <View style={styles.hour}>
                         <Text style={[styles.text, { color: '#F5F5F6', fontFamily: Platform.OS === 'ios' ? 'Helvetica-Bold' : 'Roboto' }]}>{props.record.hour}:00</Text>
@@ -35,7 +36,7 @@ export const Card = (props: CardParams) => {
                             </View>
                         </View>
                         : null}
-                </View>
+                </TouchableOpacity>
                 :
                 <View style={[styles.outside, { justifyContent: 'flex-start', height: 20, marginVertical: 4 }]}>
                     <View style={styles.hour}>
