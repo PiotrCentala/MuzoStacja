@@ -6,33 +6,25 @@ import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import RootStackParamList from './screens/RootStackParamList';
 import Moment from 'moment'
-
+import MainStackScreen from './screens/MainStack'
+import DetailsModalScreen from './screens/DetailsModalScreen';
 const RootStack = createStackNavigator<RootStackParamList>();
 const today = Moment().day();
 const ReactNavigation = () => {
   Moment.updateLocale('en', {
     week: {
       dow: today,
-    }
+    },
+    weekdays: 'Niedzielra_Poniedziałek_Wtorek_Środa_Czwartek_Piątunio_Sobota'.split('_'),
   })
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName="Home">
-        <RootStack.Screen name="Home" component={HomeScreen} initialParams={{ date: Moment().format("YYYY.MM.DD"), loadRecords: true, displayedWeek: 0 }} options={{
+      <RootStack.Navigator mode="modal">
+        <RootStack.Screen name="Main" component={MainStackScreen} options={{ headerShown: false }} />
+        <RootStack.Screen name="DetailsModal" component={DetailsModalScreen} options={{
           headerStyle: {
-            backgroundColor: '#e65100'
-          },
-          headerTitleStyle: {
-            color: '#ffffff'
-          },
-          animationEnabled: false,
-        }} />
-        <RootStack.Screen name="Login" component={LoginScreen} options={{
-          headerStyle: {
-            backgroundColor: '#e65100'
-          },
-          headerTitleStyle: {
-            color: '#ffffff'
+            backgroundColor: '#e65100',
+            height: 100,
           },
         }} />
       </RootStack.Navigator>

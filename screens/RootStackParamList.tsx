@@ -1,8 +1,8 @@
 import { weekData } from '../Logic/weekData'
 
 type RootStackParamList = {
-    Home: { date: string, loadRecords: boolean, records?: weekData[], displayedWeek: number };
-    Login: undefined;
+    Main: undefined,
+    DetailsModal: { hour: string, date: string }
 }
 
 export default RootStackParamList;

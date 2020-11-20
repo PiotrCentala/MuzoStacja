@@ -5,20 +5,22 @@ import RootStackParamList from './RootStackParamList';
 import { getRecords } from '../Api/GetRecords'
 import { setToken } from '../Api/token'
 import { weekDatabaseResponse } from '../Api/weekDatabaseResponse'
-import { filterOutEmpty } from '../Logic/ParseWeekDatabaseResponse'
 import { DayRecords } from '../Visual/DayRecords'
 import { CreateWeekData, weekData } from '../Logic/weekData'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { RouteProp } from '@react-navigation/native'
+import { HomeTitle } from '../Visual/HomeTitle'
+import Moment from 'moment'
+import MainStackParamList from './MainStackParamList';
 
-type HomeNavigationProp = StackNavigationProp<RootStackParamList, "Home">
-type HomeScreenRouteProp = RouteProp<RootStackParamList, "Home">
+type HomeNavigationProp = StackNavigationProp<MainStackParamList, "Home">
+type HomeScreenRouteProp = RouteProp<MainStackParamList, "Home">
 type Props = {
     navigation: HomeNavigationProp,
     route: HomeScreenRouteProp,
 }
 type State = {
-    records?: weekDatabaseResponse,
+    records?: weekData[],
     hasLoadedrecords?: boolean,
     RecordsErrorMessage?: '',
 }
@@ -28,10 +30,10 @@ class HomeScreen extends React.Component<Props, State>{
 
     loadRecordss() {
         getRecords(`GetSlotsInfoFromDate/${this.props.route.params.displayedWeek}/-1`)
-            .then((res: weekDatabaseResponse) =>
+            .then((res: weekData[]) =>
                 this.setState({
                     hasLoadedrecords: true,
-                    records: filterOutEmpty(res),
+                    records: res,
                 }),
             )
             .catch(this.handleUserLoadingError);
@@ -46,10 +48,9 @@ class HomeScreen extends React.Component<Props, State>{
                     hasLoadedrecords: false,
                 }
             );
-
-
         }
     }
+
     _unsubscribe = this.props.navigation.addListener(
         'focus', () => {
             if (!this.state.hasLoadedrecords) {
@@ -68,11 +69,20 @@ class HomeScreen extends React.Component<Props, State>{
                     <Icon
                         name="login-variant"
                         color="white"
-                        size={20}
+                        size={25}
                     />
                 } />
             ),
-            headerTitle: this.props.route.params.date,
+            headerLeft: () => (
+                <Button onPress={() => this.props.navigation.replace('Home', { date: Moment().format("YYYY.MM.DD"), loadRecords: true, displayedWeek: 0 })} style={{ marginLeft: 5 }} buttonStyle={{ backgroundColor: 'rba(0,0,0,0)' }} icon={
+                    <Icon
+                        name="reload"
+                        color="white"
+                        size={25}
+                    />
+                } />
+            ),
+            headerTitle: props => <HomeTitle {...props} day={this.props.route.params.date} />,
 
         });
 
@@ -91,7 +101,7 @@ class HomeScreen extends React.Component<Props, State>{
     render() {
         var data = this.props.route.params.records;
         if (this.props.route.params.records == undefined)
-            data = CreateWeekData(this.state.records as weekDatabaseResponse);
+            data = this.state.records;
         return (
             <DayRecords records={data} date={this.props.route.params.date} navigation={this.props.navigation} currentDisplayedWeek={this.props.route.params.displayedWeek}></DayRecords>
         )
