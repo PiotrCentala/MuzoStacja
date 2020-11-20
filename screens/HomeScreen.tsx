@@ -51,6 +51,7 @@ class HomeScreen extends React.Component<Props, State>{
             );
         }
     }
+
     _unsubscribe = this.props.navigation.addListener(
         'focus', () => {
             if (!this.state.hasLoadedrecords) {

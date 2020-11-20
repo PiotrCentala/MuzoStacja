@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
-import { View, Text, Button, StyleSheet, Platform, TouchableWithoutFeedback } from 'react-native'
+import React from 'react'
+import { View, StyleSheet, Platform, ScrollView } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import Moment from 'moment'
 import RootStackParamList from './RootStackParamList'
 import { RouteProp } from '@react-navigation/native'
 import { detailsFromDatabase, getDetails } from '../Api/GetDetails'
 import { DetailsModalHeader } from '../Visual/DetailsModalHeader'
-import { HomeTitle } from '../Visual/HomeTitle'
+import { DetailsModalList } from '../Visual/DetailsModalList'
+import { Record } from '../Api/GetDetails'
+
 type ModalNavigationProp = StackNavigationProp<RootStackParamList, "DetailsModal">
 type ModalRouteProp = RouteProp<RootStackParamList, "DetailsModal">
 type Props = {
@@ -58,18 +59,7 @@ class DetailsModalScreen extends React.Component<Props, State> {
     }
     render() {
         return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                {this.state.data?.data.map((dataPoint) =>
-                    (
-                        <View key={dataPoint.id} style={{ padding: 10 }}>
-                            <Text>{dataPoint.firstName}</Text>
-                            <Text>{dataPoint.lastname}</Text>
-                            <Text>{dataPoint.phone}</Text>
-                            <Text>{dataPoint.visittypeName}</Text>
-                        </View>
-                    )
-                )}
-            </View>
+            <DetailsModalList records={this.state.data?.data} />
         )
     }
 }
