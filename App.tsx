@@ -21,7 +21,12 @@ const ReactNavigation = () => {
     <NavigationContainer>
       <RootStack.Navigator mode="modal">
         <RootStack.Screen name="Main" component={MainStackScreen} options={{ headerShown: false }} />
-        <RootStack.Screen name="DetailsModal" component={DetailsModalScreen} />
+        <RootStack.Screen name="DetailsModal" component={DetailsModalScreen} options={{
+          headerStyle: {
+            backgroundColor: '#e65100',
+            height: 100,
+          },
+        }} />
       </RootStack.Navigator>
     </NavigationContainer>
   )

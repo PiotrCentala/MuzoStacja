@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text, Button, StyleSheet, Platform, TouchableWithoutFeedback } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import Moment from 'moment'
 import RootStackParamList from './RootStackParamList'
 import { RouteProp } from '@react-navigation/native'
 import { detailsFromDatabase, getDetails } from '../Api/GetDetails'
+import { DetailsModalHeader } from '../Visual/DetailsModalHeader'
+import { HomeTitle } from '../Visual/HomeTitle'
 type ModalNavigationProp = StackNavigationProp<RootStackParamList, "DetailsModal">
 type ModalRouteProp = RouteProp<RootStackParamList, "DetailsModal">
 type Props = {
@@ -45,9 +47,14 @@ class DetailsModalScreen extends React.Component<Props, State> {
     )
     componentDidMount() {
         () => this._unsubscribe;
+        this.props.navigation.setOptions({
+            headerTitle: props => <DetailsModalHeader {...props} day={this.props.route.params.date} hour={this.props.route.params.hour} />,
+            headerLeft: () => null
+        })
     }
     componentWillUnmount() {
         this._unsubscribe();
+        this.props.navigation.setOptions({});
     }
     render() {
         return (
@@ -66,4 +73,13 @@ class DetailsModalScreen extends React.Component<Props, State> {
         )
     }
 }
+const styles = StyleSheet.create({
+    hour: {
+        fontSize: 24,
+        color: '#F5F5F6',
+        fontFamily: Platform.OS === 'ios' ? 'Helvetica-Bold' : 'Roboto',
+        marginRight: 10,
+    }
+})
+
 export default DetailsModalScreen;
