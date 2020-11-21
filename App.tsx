@@ -1,13 +1,11 @@
 import React from 'react';
-import { Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import LoginScreen from './screens/LoginScreen';
-import HomeScreen from './screens/HomeScreen';
 import RootStackParamList from './screens/RootStackParamList';
 import Moment from 'moment'
 import MainStackScreen from './screens/MainStack'
 import DetailsModalScreen from './screens/DetailsModalScreen';
+import { isIPhoneXSize } from './Logic/IphoneVersion'
 const RootStack = createStackNavigator<RootStackParamList>();
 const today = Moment().day();
 const ReactNavigation = () => {
@@ -24,8 +22,12 @@ const ReactNavigation = () => {
         <RootStack.Screen name="DetailsModal" component={DetailsModalScreen} options={{
           headerStyle: {
             backgroundColor: '#e65100',
-            height: 100,
+            height: isIPhoneXSize() ? 130 : 100,
           },
+          safeAreaInsets: {
+            top: 0,
+            bottom: 0,
+          }
         }} />
       </RootStack.Navigator>
     </NavigationContainer>

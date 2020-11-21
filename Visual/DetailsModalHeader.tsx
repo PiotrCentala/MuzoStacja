@@ -10,7 +10,7 @@ export const DetailsModalHeader = (props: DetailsModalHeaderProp) => {
     const day = Moment(props.day, 'YYYY.MM.DD');
 
     return (
-        <View style={{ alignItems: 'center', flex: 1 }}>
+        <View style={{ alignItems: 'center', justifyContent: 'flex-end', flex: 1, marginBottom: 5 }}>
             <Text style={styles.weekday}>{day.format('dddd')}</Text>
             <Text style={styles.date}>{props.day}</Text>
             <Text style={styles.hour}>Godzina {props.hour}:00</Text>
