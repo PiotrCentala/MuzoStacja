@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, Platform, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
 import { Record } from '../Api/GetDetails'
+import { callNumber } from '../Logic/CallNumber'
 type DetailsModalParams =
     {
         record: Record,
@@ -26,7 +27,9 @@ export const DetailsModalCard = (props: DetailsModalParams) => {
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Text style={styles.text}>Telefon:</Text>
-                            <Text style={styles.text}>{props.record.phone}</Text>
+                            <TouchableOpacity onPress={() => callNumber(props.record.phone)}>
+                                <Text style={[styles.text, { fontStyle: 'italic' }]}>{props.record.phone}</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                     <View style={{ justifyContent: 'center', alignItems: 'flex-end' }}>
