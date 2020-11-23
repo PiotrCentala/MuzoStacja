@@ -2,22 +2,23 @@ import { useLinkProps } from '@react-navigation/native'
 import React from 'react'
 import { Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import { Platform, StyleSheet, Text, View } from 'react-native'
 type NavButtonProp = {
-    logic: (input: number) => void,
+    title: string,
     icon: string,
-    direction: number,
+    color: string,
 }
 
-export const NavButton = (props: NavButtonProp) => {
+export const TabHeader = (props: NavButtonProp) => {
     return (
-        <TouchableOpacity onPress={() => props.logic(props.direction)} style={styles.roundButton} >
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Icon
                 name={props.icon}
-                color="white"
-                size={30}
+                color={props.color}
+                size={22}
             />
-        </TouchableOpacity>
+            <Text style={{ color: props.color, fontFamily: Platform.OS === 'ios' ? 'Helvetica' : 'Roboto', }} >{props.title}</Text>
+        </View>
     )
 }
 

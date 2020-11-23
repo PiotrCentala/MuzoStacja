@@ -85,9 +85,12 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     buttons: {
+        borderTopWidth: 1,
+        borderTopColor: 'lightgray',
         flexDirection: 'row-reverse',
         justifyContent: "space-between",
+        backgroundColor: '#ffffff',
         alignItems: 'center',
-        padding: 15,
+        paddingHorizontal: 10,
     }
 });
