@@ -23,14 +23,6 @@ const MainStackScreen = () => {
                 },
                 animationEnabled: false,
             }} />
-            <MainStack.Screen name="Login" component={LoginScreen} options={{
-                headerStyle: {
-                    backgroundColor: '#e65100'
-                },
-                headerTitleStyle: {
-                    color: '#ffffff'
-                },
-            }} />
         </MainStack.Navigator>
     )
 

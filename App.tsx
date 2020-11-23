@@ -6,29 +6,24 @@ import Moment from 'moment'
 import MainStackScreen from './screens/MainStack'
 import DetailsModalScreen from './screens/DetailsModalScreen';
 import { isIPhoneXSize } from './Logic/IphoneVersion'
-const RootStack = createStackNavigator<RootStackParamList>();
-const today = Moment().day();
+import TabStackScreen from './screens/TabStack';
+import MainStackParamList from './screens/MainStackParamList';
+import LoginScreen from './screens/LoginScreen';
+import ModalStackScreen from './screens/ModalStack';
+const RootStack = createStackNavigator<MainStackParamList>();
 const ReactNavigation = () => {
-  Moment.updateLocale('en', {
-    week: {
-      dow: today,
-    },
-    weekdays: 'Niedzielra_Poniedziałek_Wtorek_Środa_Czwartek_Piątunio_Sobota'.split('_'),
-  })
   return (
     <NavigationContainer>
-      <RootStack.Navigator mode="modal">
-        <RootStack.Screen name="Main" component={MainStackScreen} options={{ headerShown: false }} />
-        <RootStack.Screen name="DetailsModal" component={DetailsModalScreen} options={{
+      <RootStack.Navigator initialRouteName='Modal'>
+        <RootStack.Screen name="Login" component={LoginScreen} options={{
           headerStyle: {
-            backgroundColor: '#e65100',
-            height: isIPhoneXSize() ? 130 : 100,
+            backgroundColor: '#e65100'
           },
-          safeAreaInsets: {
-            top: 0,
-            bottom: 0,
-          }
+          headerTitleStyle: {
+            color: '#ffffff'
+          },
         }} />
+        <RootStack.Screen name="Modal" component={ModalStackScreen} options={{ headerShown: false }} />
       </RootStack.Navigator>
     </NavigationContainer>
   )

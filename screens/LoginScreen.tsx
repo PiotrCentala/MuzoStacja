@@ -5,7 +5,7 @@ import EmailForm from '../forms/EmailForm'
 import Moment from 'moment'
 import { Login } from '../Api/authentication'
 import MainStackParamList from './MainStackParamList';
-
+import { CompositeNavigationProp } from '@react-navigation/native'
 
 type LoginNavigationProp = StackNavigationProp<MainStackParamList, "Login">
 type Props = {
@@ -19,7 +19,14 @@ const LoginScreen = ({ navigation }: Props) => {
         <EmailForm
             buttonText="Zaloguj"
             onSubmit={Login}
-            onAuthentication={() => navigation.replace('Home', { date: Moment().format("YYYY.MM.DD"), loadRecords: true, displayedWeek: 0 })}
+            onAuthentication={() => navigation.replace('Modal', {
+                screen: 'Tabs', params: {
+                    screen: 'Main', params: {
+                        screen: 'Home',
+                        params: { date: Moment().format("YYYY.MM.DD"), loadRecords: true, displayedWeek: 0 }
+                    }
+                }
+            })}
         />
     )
 }
