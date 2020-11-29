@@ -14,6 +14,7 @@ const MainStackScreen = () => {
             dow: today,
         },
         weekdays: 'Niedzielra_Poniedziałek_Wtorek_Środa_Czwartek_Piątunio_Sobota'.split('_'),
+        months: 'Styczeń_Luty_Marzec_Kwiecień_Maj_Czerwiec_Lipiec_Sierpień_Wrzesień_Październik_Listopad_Grudzień'.split('_'),
     })
     return (
         <MainStack.Navigator initialRouteName="Home">

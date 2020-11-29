@@ -6,6 +6,7 @@ import StatsScreen from './StatsScreen'
 import { TabHeader } from '../Visual/TabHeaders'
 import HomeScreen from './HomeScreen';
 import Moment from 'moment'
+import { unmountComponentAtNode } from 'react-dom';
 
 const Tab = createBottomTabNavigator<TabStackParamsList>();
 
@@ -36,7 +37,7 @@ const TabStackScreen = () => {
             }}
         >
             <Tab.Screen name='Main' component={MainStackScreen} />
-            <Tab.Screen name='Stats' component={StatsScreen} />
+            <Tab.Screen name='Stats' component={StatsScreen} options={{ unmountOnBlur: true }} />
         </Tab.Navigator>
     )
 

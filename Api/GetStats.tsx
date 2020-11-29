@@ -4,7 +4,7 @@ export type StatsFromDatabase = {
     data: Stats[],
 }
 export type Stats = {
-    total: string,
+    total: number,
     month: number,
     year: string,
 }

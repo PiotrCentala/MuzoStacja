@@ -1,10 +1,15 @@
 import React, { useState } from 'react'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/native'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import MainStackParamList from './MainStackParamList'
 import TabStackParamsList from './TabStackParamsList'
 import { getStats, Stats } from '../Api/GetStats'
+import { BarChart } from 'react-native-chart-kit'
+import { Dimensions } from "react-native";
+import { StatsNumbers } from '../Visual/StatsNumbers'
+
+
 
 type StatsNavigationProp = StackNavigationProp<TabStackParamsList, "Stats">
 type StatsRouteProp = RouteProp<TabStackParamsList, 'Stats'>
@@ -50,13 +55,40 @@ class StatsScreen extends React.Component<Props, State> {
         this._unsubscribe();
     }
     render() {
+
+
+
+
+        // const dataset = {
+        //     labels: StatsData.map((a) => a.Month).reverse(),
+        //     datasets: [
+        //         {
+        //             data: StatsData.map((a) => a.Income).reverse(),
+        //         }
+        //     ]
+        // };
+        // const chartConfig = {
+        //     backgroundGradientFrom: "lightgray",
+        //     data: dataset.datasets,
+        //     backgroundGradientFromOpacity: 0,
+        //     backgroundGradientTo: "lightgray",
+        //     backgroundGradientToOpacity: 0,
+        //     color: () => `#e65100`,
+        //     strokeWidth: 3, // optional, default 3
+        //     barPercentage: 0.5,
+        //     //barRadius: 2,
+        //     useShadowColorFromDataset: false // optional
+        // };
+        // const graphStyle = {
+        //     marginVertical: 8,
+        // }
+        // const screenWidth = Dimensions.get("window").width;
+
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                {this.state.StatsFromDatabse.filter((a) => a.year == '2020').map((month) => (
-                    <Text key={month.month}>{month.total}</Text>
-                ))}
-            </View>
+            <StatsNumbers dataInput={this.state.StatsFromDatabse} />
         );
     }
 }
+
+
 export default StatsScreen
