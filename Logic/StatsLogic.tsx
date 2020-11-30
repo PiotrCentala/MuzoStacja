@@ -30,30 +30,27 @@ export const GetDatasetIncomeNumbers = (input: Stats[]) => {
         }
         Totalt:
         {
-            Income: number,
+            Income: string,
         }
     }
-    const data = [] as Stats[]
     if (input.length == 0 || input == null) {
         console.log('przerwanie');
         return undefined;
     }
-    const sum = Math.round(input.map((s) => s.total).reduce((a, b) => Number(a) + Number(b)));
-    for (var i = 0; i < 12; i++) {
-        data.push(input?.pop() as Stats);
-    }
+    const data = input.filter((a) => (Number(a.year) > 2018 && Number(a.month) > 5) || Number(a.year) > 2019).reverse();
+    const sum = data.map((s) => s.total).reduce((a, b) => Number(a) + Number(b)).toFixed(2);
     const maximum = data.find((a) => a?.total == Math.max(...data.map((num) => num.total)));
     if (maximum == undefined)
         return undefined
     const response: Response = {
-        ThisMonth: { Income: Math.round(data[0].total as number) },
+        ThisMonth: { Income: data[0].total as number },
         Record: {
-            Income: Math.round(maximum.total),
+            Income: maximum.total,
             Year: maximum.year,
             Month: Moment().month(maximum.month - 1).format("MMMM"),
         },
         Average: {
-            Income: Math.round(data.map((z) => z.total).reduce((a, b) => Number(a) + Number(b)) / data.length),
+            Income: Math.round((data.map((z) => z.total).reduce((a, b) => Number(a) + Number(b)) / data.length) * 100) / 100,
         },
         Totalt: {
             Income: sum,
